@@ -806,7 +806,13 @@ function callClaude(prompt) {
       if (code !== 0) reject(new Error(stderr || `claude exited with code ${code}`));
       else resolve(stdout.trim());
     });
-    proc.on("error", (err) => reject(err));
+    proc.on("error", (err) => {
+      if (err.code === "ENOENT") {
+        reject(new Error("Claude CLI not found. Install it with: npm install -g @anthropic-ai/claude-code && claude login"));
+      } else {
+        reject(err);
+      }
+    });
   });
 }
 

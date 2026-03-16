@@ -195,7 +195,7 @@ function renderDaily(data) {
 
   if (data.numerology) {
     const n = data.numerology;
-    const pm = n.personalDayMeaning;
+    const pm = n.personalDayMeaning || {};
     $("numerology-content").innerHTML = `
       <div class="numerology-row">
         <div class="num-big">${n.personalDay}</div>
@@ -233,7 +233,7 @@ function renderDaily(data) {
       </div>`).join("");
   }
 
-  $("transit-list").innerHTML = data.transits.map((t) =>
+  $("transit-list").innerHTML = (data.transits || []).map((t) =>
     `<div class="sky-pill" data-body="${t.body}" data-sign="${t.sign}" data-degree="${t.degree}"><span>${t.body}</span><strong>${t.sign}</strong><span class="sky-deg">${t.degree}&deg;</span></div>`
   ).join("");
   $("transit-updated").textContent = "Live";
@@ -273,9 +273,10 @@ let natalData = null; // cached for deep dive generation
 
 function renderNatal(data) {
   natalData = data;
-  $("natal-birth").textContent = `${data.birth.date} · ${data.birth.time} · ${data.birth.place}`;
+  const birth = data.birth || {};
+  $("natal-birth").textContent = `${birth.date || ""} · ${birth.time || ""} · ${birth.place || ""}`;
 
-  $("placement-list").innerHTML = data.bodies.map((b) => `
+  $("placement-list").innerHTML = (data.bodies || []).map((b) => `
     <div class="placement-row">
       <span class="placement-label">${b.label}</span>
       <span class="placement-sign">${b.sign} ${b.degree}</span>
@@ -283,24 +284,24 @@ function renderNatal(data) {
     </div>`).join("") + `
     <div class="placement-row">
       <span class="placement-label">Ascendant</span>
-      <span class="placement-sign">${data.points[0].sign} ${data.points[0].degree}</span>
+      <span class="placement-sign">${((data.points || [])[0] || {}).sign || ""} ${((data.points || [])[0] || {}).degree || ""}</span>
       <span class="placement-house">H1</span>
     </div>
     <div class="placement-row">
       <span class="placement-label">Midheaven</span>
-      <span class="placement-sign">${data.points[1].sign} ${data.points[1].degree}</span>
+      <span class="placement-sign">${((data.points || [])[1] || {}).sign || ""} ${((data.points || [])[1] || {}).degree || ""}</span>
       <span class="placement-house">H10</span>
     </div>`;
 
   // Aspects (always show)
-  $("aspect-list").innerHTML = data.aspects.map((a) =>
+  $("aspect-list").innerHTML = (data.aspects || []).map((a) =>
     detailItem(`${a.from} ${a.type} ${a.to}`, `Orb ${a.orb}&deg;`)
   ).join("");
 
   renderBigThree(data);
   setupChartReading();
   setupLifeThemes();
-  setupDeepDives(data.bodies);
+  setupDeepDives(data.bodies || []);
 
   // Wheel — improved with sign ring and aspect lines
   const SIGN_GLYPHS = ["\u2648","\u2649","\u264A","\u264B","\u264C","\u264D","\u264E","\u264F","\u2650","\u2651","\u2652","\u2653"];
@@ -320,7 +321,7 @@ function renderNatal(data) {
   }).join("");
 
   // House lines
-  const houseLines = data.wheel.houses.map((h) => {
+  const houseLines = ((data.wheel || {}).houses || []).map((h) => {
     const s = polarPoint(h.angle, 50), e = polarPoint(h.angle, 155), l = polarPoint(h.angle + 10, 142);
     return `<line x1="${s.x}" y1="${s.y}" x2="${e.x}" y2="${e.y}" stroke="rgba(255,170,200,0.12)" stroke-width="0.8" />
       <text x="${l.x}" y="${l.y}" fill="rgba(255,200,220,0.4)" font-size="9" text-anchor="middle">${h.id}</text>`;
@@ -332,9 +333,9 @@ function renderNatal(data) {
     Trine: "rgba(120,200,255,0.2)", Square: "rgba(255,120,120,0.15)", Sextile: "rgba(140,220,180,0.15)"
   };
   const planetPositions = {};
-  data.wheel.planets.forEach(p => { planetPositions[p.label] = polarPoint(p.angle, 120); });
+  ((data.wheel || {}).planets || []).forEach(p => { planetPositions[p.label] = polarPoint(p.angle, 120); });
 
-  const aspectLines = data.aspects.map(a => {
+  const aspectLines = (data.aspects || []).map(a => {
     const p1 = planetPositions[a.from];
     const p2 = planetPositions[a.to];
     if (!p1 || !p2) return "";
@@ -345,7 +346,7 @@ function renderNatal(data) {
 
   // Planet dots — offset to avoid overlap
   const usedSlots = [];
-  const dots = data.wheel.planets.map((p) => {
+  const dots = ((data.wheel || {}).planets || []).map((p) => {
     let angle = p.angle;
     // Nudge if too close to another planet
     for (const used of usedSlots) {
@@ -522,24 +523,24 @@ const BIG3_MEANINGS = {
 function renderBigThree(data) {
   const b3 = data.bigThree;
   if (!b3) return;
-  const sunM = BIG3_MEANINGS[b3.sun.sign] || {};
-  const moonM = BIG3_MEANINGS[b3.moon.sign] || {};
-  const risingM = BIG3_MEANINGS[b3.rising.sign] || {};
+  const sunM = BIG3_MEANINGS[(b3.sun || {}).sign] || {};
+  const moonM = BIG3_MEANINGS[(b3.moon || {}).sign] || {};
+  const risingM = BIG3_MEANINGS[(b3.rising || {}).sign] || {};
 
   $("big-three-strip").innerHTML = `
     <div class="big-three-card">
       <div class="b3-label">Sun</div>
-      <div class="b3-sign">${b3.sun.sign}</div>
+      <div class="b3-sign">${(b3.sun || {}).sign || ""}</div>
       <div class="b3-meaning">${sunM.sun || ""}</div>
     </div>
     <div class="big-three-card">
       <div class="b3-label">Moon</div>
-      <div class="b3-sign">${b3.moon.sign}</div>
+      <div class="b3-sign">${(b3.moon || {}).sign || ""}</div>
       <div class="b3-meaning">${moonM.moon || ""}</div>
     </div>
     <div class="big-three-card">
       <div class="b3-label">Rising</div>
-      <div class="b3-sign">${b3.rising.sign}</div>
+      <div class="b3-sign">${(b3.rising || {}).sign || ""}</div>
       <div class="b3-meaning">${risingM.rising || ""}</div>
     </div>`;
 }
@@ -704,30 +705,30 @@ function getVedicPlacementNote(label, sign) {
 
 function renderVedic(data) {
   // Big 3 strip
-  const b3 = data.bigThree;
-  const sunM = VEDIC_SIGN_MEANINGS[b3.sun.sign] || {};
-  const moonM = VEDIC_SIGN_MEANINGS[b3.moon.sign] || {};
-  const risingM = VEDIC_SIGN_MEANINGS[b3.rising.sign] || {};
+  const b3 = data.bigThree || {};
+  const sunM = VEDIC_SIGN_MEANINGS[((b3.sun || {}).sign)] || {};
+  const moonM = VEDIC_SIGN_MEANINGS[((b3.moon || {}).sign)] || {};
+  const risingM = VEDIC_SIGN_MEANINGS[((b3.rising || {}).sign)] || {};
 
   $("vedic-big-three").innerHTML = `
     <div class="big-three-card">
       <div class="b3-label">Sun</div>
-      <div class="b3-sign">${b3.sun.sign}</div>
+      <div class="b3-sign">${(b3.sun || {}).sign || ""}</div>
       <div class="b3-meaning">${sunM.sun || ""}</div>
     </div>
     <div class="big-three-card">
       <div class="b3-label">Moon</div>
-      <div class="b3-sign">${b3.moon.sign}</div>
+      <div class="b3-sign">${(b3.moon || {}).sign || ""}</div>
       <div class="b3-meaning">${moonM.moon || ""}</div>
     </div>
     <div class="big-three-card">
       <div class="b3-label">Rising</div>
-      <div class="b3-sign">${b3.rising.sign}</div>
+      <div class="b3-sign">${(b3.rising || {}).sign || ""}</div>
       <div class="b3-meaning">${risingM.rising || ""}</div>
     </div>`;
 
   // Placement grid with hover tooltips
-  const allPlacements = data.bodies.filter(b => b.label !== "Sirius");
+  const allPlacements = (data.bodies || []).filter(b => b.label !== "Sirius");
   $("vedic-placements").innerHTML = allPlacements.map(b =>
     `<div class="vedic-pill" data-label="${b.label}" data-sign="${b.sign}" data-house="${b.house}" data-degree="${b.degree}">
       <span class="vp-body">${b.label}</span>
@@ -758,7 +759,7 @@ function renderVedic(data) {
   // Vedic overview generate — stash sidereal data for the prompt
   vedicPlacementData = {
     vedicPlacements: allPlacements.map(b => `${b.label}: ${b.sign} H${b.house} ${b.degree}`).join("\n"),
-    vedicBigThree: `${b3.sun.sign} Sun, ${b3.moon.sign} Moon, ${b3.rising.sign} Rising`
+    vedicBigThree: `${(b3.sun || {}).sign || ""} Sun, ${(b3.moon || {}).sign || ""} Moon, ${(b3.rising || {}).sign || ""} Rising`
   };
   setupVedicOverview();
 }
@@ -844,7 +845,7 @@ function renderGalactic(data) {
       const emoji = ALIEN_EMOJI[top.name] || "\uD83D\uDC7D";
       const connectedPlanets = [];
       for (const row of pTable) {
-        for (const c of [...(row.conjunct||[]), ...(row.opposite||[])]) {
+        for (const c of [...(row.conjunct || []), ...(row.opposite || [])]) {
           if (c.constellation === top.name) connectedPlanets.push(row.planet);
         }
       }
@@ -955,10 +956,10 @@ function renderGalacticReading(r) {
     </div>`;
   }
 
-  if (r.secondaryLineages && r.secondaryLineages.length > 0) {
+  if (r.secondaryLineages && (r.secondaryLineages || []).length > 0) {
     html += `<div class="galactic-section">
       <div class="galactic-section-label">Secondary Lineages</div>
-      ${r.secondaryLineages.map(s => `<p><strong>${escapeHtml(s.star)}:</strong> ${escapeHtml(s.reading)}</p>`).join("")}
+      ${(r.secondaryLineages || []).map(s => `<p><strong>${escapeHtml(s.star)}:</strong> ${escapeHtml(s.reading)}</p>`).join("")}
     </div>`;
   }
 
@@ -981,8 +982,9 @@ function renderGalacticReading(r) {
 
 /* ── Annual Forecast ──────────────────────────── */
 function renderForecast(data) {
-  $("forecast-year-label").textContent = `${data.year} Annual Forecast`;
-  $("forecast-based-on").textContent = `${data.basedOn.natal} · ${data.basedOn.currentSky}`;
+  $("forecast-year-label").textContent = `${data.year || ""} Annual Forecast`;
+  const basedOn = data.basedOn || {};
+  $("forecast-based-on").textContent = `${basedOn.natal || ""} · ${basedOn.currentSky || ""}`;
 
   setupForecast(data);
 }
@@ -1045,7 +1047,7 @@ function renderForecastContent(r) {
   $("forecast-themes").innerHTML = (r.themes || []).map((t) => detailItem(t.title, t.text)).join("");
   $("forecast-sections").innerHTML = (r.sections || []).map((s) => detailItem(s.title, s.text)).join("");
   if (r.months) {
-    $("forecast-months").innerHTML = r.months.map((m) => `
+    $("forecast-months").innerHTML = (r.months || []).map((m) => `
       <div class="month-card">
         <div class="month-card-head"><strong>${m.month}</strong><span>${m.theme}</span></div>
         <p>${m.text}</p>
@@ -1499,37 +1501,33 @@ async function load() {
   }
 
   const qs = profileQueryString();
-  try {
-    const [dR, nR, vR, gR, fR, mR] = await Promise.all([
-      fetch("/api/daily-reading" + qs, { cache: "no-store" }),
-      fetch("/api/natal" + qs, { cache: "no-store" }),
-      fetch("/api/vedic" + qs, { cache: "no-store" }),
-      fetch("/api/galactic" + qs, { cache: "no-store" }),
-      fetch("/api/annual-forecast" + qs, { cache: "no-store" }),
-      fetch("/api/destiny-matrix?birthDate=" + getProfile().birthDate, { cache: "no-store" })
-    ]);
-    const [daily, natal, vedic, galactic, forecast, matrix] = await Promise.all([
-      dR.json(), nR.json(), vR.json(), gR.json(), fR.json(), mR.json()
-    ]);
 
-    renderDaily(daily);
-    renderNatal(natal);
-    renderVedic(vedic);
-    renderGalactic(galactic);
-    renderForecast(forecast);
-    renderLifePath();
-
-    if (!matrix.error) {
-      renderDestinyMatrixSVG(matrix);
-      setupMatrixReading();
+  async function safeLoad(url, renderer, label) {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      const data = await res.json();
+      if (data.error === "no_profile") return;
+      renderer(data);
+    } catch (e) {
+      console.warn(`Failed to load ${label}:`, e.message);
     }
-
-    setupHumanDesign();
-    setupPersonality();
-  } catch (e) {
-    $("daily-headline").textContent = "Cosmic feed unavailable right now.";
-    $("daily-aspects").innerHTML = `<div class="aspect-card"><p>${e.message}</p></div>`;
   }
+
+  // Fire all endpoints independently — one failure doesn't block others
+  await Promise.allSettled([
+    safeLoad("/api/daily-reading" + qs, renderDaily, "daily"),
+    safeLoad("/api/natal" + qs, renderNatal, "natal"),
+    safeLoad("/api/vedic" + qs, renderVedic, "vedic"),
+    safeLoad("/api/galactic" + qs, renderGalactic, "galactic"),
+    safeLoad("/api/annual-forecast" + qs, renderForecast, "forecast"),
+    safeLoad("/api/destiny-matrix?birthDate=" + getProfile().birthDate, (data) => {
+      if (!data.error) { renderDestinyMatrixSVG(data); setupMatrixReading(); }
+    }, "destiny-matrix")
+  ]);
+
+  renderLifePath();
+  setupHumanDesign();
+  setupPersonality();
 }
 
 // Init
@@ -1765,23 +1763,65 @@ setTimeout(renderSavedAsks, 100);
 
 /* ── Background Picker ────────────────────────── */
 const BG_KEY = "cosmic-weather-bg";
-const BG_MAP = { default: "", constellations: "bg-constellations", kawaii: "bg-kawaii", glitch: "bg-glitch" };
+const CUSTOM_BG_KEY = "cosmic-weather-custom-bg";
+const BG_MAP = { default: "", constellations: "bg-constellations", kawaii: "bg-kawaii", glitch: "bg-glitch", custom: "bg-custom" };
 
 function applyBackground(id) {
   Object.values(BG_MAP).forEach(cls => { if (cls) document.body.classList.remove(cls); });
-  if (BG_MAP[id]) document.body.classList.add(BG_MAP[id]);
+  if (id === "custom") {
+    const customUrl = localStorage.getItem(CUSTOM_BG_KEY);
+    if (customUrl) {
+      document.body.style.setProperty("--custom-bg", `url(${customUrl})`);
+      document.body.classList.add("bg-custom");
+    }
+  } else {
+    document.body.style.removeProperty("--custom-bg");
+    if (BG_MAP[id]) document.body.classList.add(BG_MAP[id]);
+  }
   localStorage.setItem(BG_KEY, id);
   document.querySelectorAll(".bg-option").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.bg === id);
   });
+  // Also highlight upload option
+  const uploadOption = document.querySelector(".bg-upload-option");
+  if (uploadOption) uploadOption.classList.toggle("active", id === "custom");
 }
 
 // Init background from saved preference
 applyBackground(localStorage.getItem(BG_KEY) || "default");
 
-document.querySelectorAll(".bg-option").forEach(btn => {
+// Show custom preview if exists
+const savedCustom = localStorage.getItem(CUSTOM_BG_KEY);
+if (savedCustom) {
+  const preview = $("bg-upload-preview");
+  if (preview) preview.innerHTML = `<img src="${savedCustom}" alt="Custom" />`;
+}
+
+document.querySelectorAll(".bg-option[data-bg]").forEach(btn => {
   btn.addEventListener("click", () => applyBackground(btn.dataset.bg));
 });
+
+// Custom background upload
+const bgUpload = $("bg-upload");
+if (bgUpload) {
+  bgUpload.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target.result;
+      try {
+        localStorage.setItem(CUSTOM_BG_KEY, dataUrl);
+        const preview = $("bg-upload-preview");
+        if (preview) preview.innerHTML = `<img src="${dataUrl}" alt="Custom" />`;
+        applyBackground("custom");
+      } catch {
+        alert("Image too large for localStorage. Try a smaller file (under 2MB).");
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 $("clear-profile-btn").addEventListener("click", () => {
   clearAllProfile();

@@ -1,0 +1,17 @@
+{
+  "name": "cosmic-weather",
+  "version": "1.0.0",
+  "description": "Localhost astrology and space weather dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "astronomy-engine": "^2.1.19",
+    "circular-natal-horoscope-js": "^1.1.0"
+  }
+}

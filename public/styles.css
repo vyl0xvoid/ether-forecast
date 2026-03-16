@@ -1,0 +1,1925 @@
+:root {
+  color-scheme: dark;
+  --bg: #0a0515;
+  --panel: rgba(255, 180, 200, 0.18);
+  --panel-hover: rgba(255, 180, 200, 0.25);
+  --border: rgba(255, 200, 220, 0.2);
+  --border-light: rgba(255, 200, 220, 0.35);
+  --text: #fff6fa;
+  --muted: #f0d4e0;
+  --accent: #ffc8e0;
+  --gold: #ffd6aa;
+  --glow: rgba(255, 160, 200, 0.25);
+  --card-radius: 1.2rem;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  min-height: 100vh;
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--text);
+  background:
+    linear-gradient(rgba(30, 15, 40, 0.35), rgba(20, 10, 35, 0.3)),
+    url("/background.png") center center / cover no-repeat fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ─────────────────────────────────────── */
+.page {
+  width: min(960px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+}
+
+.daily-hero {
+  text-align: center;
+  padding: 1.5rem 1rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Header Row ───────────────────────────────── */
+.header-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 0.2rem;
+}
+
+.profile-btn {
+  position: absolute;
+  right: -0.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 170, 255, 0.25);
+  background: rgba(160, 130, 220, 0.15);
+  color: var(--text);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+
+.profile-btn:hover {
+  background: rgba(160, 130, 220, 0.3);
+  border-color: rgba(200, 170, 255, 0.5);
+}
+
+/* ── Alien Widget ────────────────────────────── */
+.alien-widget {
+  text-align: center;
+  padding: 1.5rem 1.2rem;
+  border-radius: var(--card-radius);
+  background: rgba(160, 130, 220, 0.1);
+  border: 1px solid rgba(160, 130, 220, 0.2);
+  backdrop-filter: blur(16px);
+}
+
+.alien-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.alien-name {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.6rem;
+  color: var(--text);
+  margin: 0.4rem 0 0.2rem;
+  text-shadow: 0 0 20px rgba(160, 130, 220, 0.3);
+}
+
+.alien-lore {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  max-width: 30rem;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.alien-planets {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+}
+
+.eyebrow {
+  font-family: 'Cinzel', Georgia, serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.daily-date {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+.daily-hero h1 {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.4;
+  text-wrap: balance;
+  color: var(--text);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.moon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(255, 170, 200, 0.1);
+  border: 1px solid rgba(255, 170, 200, 0.15);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.moon-badge strong { color: var(--text); }
+.moon-sep { opacity: 0.4; }
+.moon-countdown { font-size: 0.82rem; }
+.moon-note {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 210, 140, 0.15);
+  border: 1px solid rgba(255, 210, 140, 0.25);
+  color: var(--gold);
+  font-size: 0.7rem;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+
+/* ── Sky Events ──────────────────────────────── */
+.sky-events {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.sky-event-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+}
+
+.sky-event-icon {
+  font-size: 1.3rem;
+  min-width: 1.8rem;
+  text-align: center;
+}
+
+.sky-event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sky-event-info strong {
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.sky-event-note {
+  font-size: 0.75rem;
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* ── Labels & Small ───────────────────────────── */
+.label {
+  font-family: 'Cinzel', Georgia, serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.small { font-size: 0.8rem; color: var(--muted); }
+
+/* ── Aspect Cards (Daily Reading) ─────────────── */
+.aspect-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.aspect-card {
+  padding: 1.4rem;
+  border-radius: var(--card-radius);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.aspect-card:hover {
+  border-color: var(--border-light);
+  background: var(--panel-hover);
+}
+
+.aspect-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.6rem;
+}
+
+.aspect-card-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.aspect-card-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 170, 200, 0.1);
+  border: 1px solid rgba(255, 170, 200, 0.1);
+}
+
+.aspect-card p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.loading-shimmer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── Section Header ───────────────────────────── */
+.section-header {
+  margin-bottom: 0.6rem;
+}
+
+.section-header .small {
+  margin-top: 0.15rem;
+}
+
+/* ── Current Sky Grid ────────────────────────── */
+.sky-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.sky-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.5rem 0.4rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: center;
+  transition: background 0.15s;
+}
+
+.sky-pill:hover {
+  background: rgba(255, 170, 200, 0.12);
+}
+
+.sky-pill span:first-child {
+  font-size: 0.68rem;
+  opacity: 0.7;
+}
+
+.sky-pill strong {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.sky-pill .sky-deg {
+  font-size: 0.65rem;
+  opacity: 0.5;
+}
+
+.sky-pill { cursor: pointer; }
+
+.sky-pill-active {
+  background: rgba(200, 170, 255, 0.15);
+  border-color: rgba(200, 170, 255, 0.35);
+}
+
+.transit-detail {
+  margin-top: 0.8rem;
+  padding: 1rem 1.2rem;
+  border-radius: 0.8rem;
+  background: rgba(200, 170, 255, 0.08);
+  border: 1px solid rgba(200, 170, 255, 0.15);
+  text-align: left;
+  animation: fadeIn 0.2s ease;
+}
+
+.transit-detail strong {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.transit-detail p {
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── Save Toast ───────────────────────────────── */
+.save-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(140, 220, 180, 0.2);
+  border: 1px solid rgba(140, 220, 180, 0.3);
+  backdrop-filter: blur(12px);
+  color: #a8e8c8;
+  font-size: 0.78rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 999;
+}
+
+.save-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Sky Events Strip ────────────────────────── */
+.sky-events-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  justify-content: center;
+}
+
+.sky-event-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 210, 140, 0.08);
+  border: 1px solid rgba(255, 210, 140, 0.12);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.sky-event-chip strong {
+  color: var(--gold);
+}
+
+.sky-event-chip .event-icon {
+  font-size: 0.85rem;
+}
+
+.retro-chip {
+  background: rgba(255, 140, 140, 0.08);
+  border-color: rgba(255, 140, 140, 0.15);
+}
+
+.retro-chip strong {
+  color: #ffb0b0;
+}
+
+/* ── Tabs ─────────────────────────────────────── */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: rgba(255, 170, 200, 0.06);
+  color: var(--muted);
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab:hover { border-color: var(--border-light); color: var(--text); }
+
+.tab.active {
+  background: rgba(255, 170, 200, 0.15);
+  border-color: rgba(200, 170, 255, 0.3);
+  color: var(--text);
+}
+
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── Panel ────────────────────────────────────── */
+.panel {
+  padding: 1.5rem;
+  border-radius: var(--card-radius);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+}
+
+.panel-full { width: 100%; }
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+
+/* ── Detail List (replaces aspect-list/big-three-list) ── */
+.detail-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.detail-item {
+  padding: 0.9rem 1rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+}
+
+.detail-item strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.detail-item span {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── Placement Grid ───────────────────────────── */
+.placement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.6rem;
+}
+
+.placement-chip {
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+  font-size: 0.82rem;
+}
+
+.placement-chip span { color: var(--muted); }
+.placement-chip strong { color: var(--text); display: block; margin-top: 0.15rem; }
+
+/* ── Natal Layout ─────────────────────────────── */
+.natal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+.wheel-card {
+  display: grid;
+  place-items: center;
+  min-height: 380px;
+  border-radius: var(--card-radius);
+  background: radial-gradient(circle, rgba(160, 100, 240, 0.08), rgba(160, 100, 240, 0.02));
+  border: 1px solid var(--border);
+}
+
+.chart-wheel {
+  width: min(100%, 400px);
+  height: auto;
+  overflow: visible;
+}
+
+.placements-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Big 3 Strip ─────────────────────────────── */
+.big-three-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+
+.big-three-card {
+  padding: 1rem;
+  border-radius: var(--card-radius);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  text-align: center;
+}
+
+.big-three-card .b3-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.big-three-card .b3-sign {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.1rem;
+  color: var(--text);
+  margin: 0.3rem 0 0.2rem;
+}
+
+.big-three-card .b3-meaning {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Life Themes Grid ────────────────────────── */
+.life-themes-grid {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.life-theme-card {
+  padding: 1rem 1.1rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 170, 200, 0.05);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+  transition: border-color 0.2s;
+}
+
+.life-theme-card:hover {
+  border-color: rgba(255, 170, 200, 0.18);
+}
+
+.life-theme-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.life-theme-header strong {
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.life-theme-body {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.life-theme-body.empty {
+  opacity: 0.4;
+  font-style: italic;
+}
+
+/* ── Galactic Table ───────────────────────────── */
+.galactic-table-wrap {
+  margin-top: 0.6rem;
+  overflow-x: auto;
+}
+
+.galactic-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.galactic-table th {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.galactic-table td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid rgba(255, 170, 200, 0.05);
+  color: var(--muted);
+  vertical-align: middle;
+}
+
+.galactic-table tr:hover td {
+  background: rgba(255, 170, 200, 0.04);
+}
+
+.galactic-table .gt-planet {
+  color: var(--text);
+  font-weight: 600;
+  min-width: 4.5rem;
+}
+
+.galactic-table .gt-pos {
+  white-space: nowrap;
+}
+
+.galactic-table .gt-house {
+  text-align: center;
+  opacity: 0.6;
+}
+
+.gt-constellation {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 0.1rem 0.15rem;
+}
+
+.gt-conjunct { color: #82d8b0; }
+.gt-opposite { color: #d8a0e0; }
+.gt-empty { opacity: 0.2; }
+
+/* ── Star Connections ─────────────────────────── */
+.star-connections {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.star-card {
+  padding: 0.9rem 1rem;
+  border-radius: 0.8rem;
+  background: rgba(20, 10, 35, 0.65);
+  border: 1px solid rgba(160, 130, 220, 0.2);
+  backdrop-filter: blur(16px);
+  transition: all 0.2s;
+}
+
+.star-card:hover {
+  border-color: rgba(160, 130, 220, 0.4);
+  background: rgba(20, 10, 35, 0.75);
+}
+
+.star-card-name {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.star-card-pos {
+  font-size: 0.7rem;
+  color: var(--muted);
+  opacity: 0.6;
+  margin-top: 0.1rem;
+}
+
+.star-card-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.star-planet-chip {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 170, 200, 0.1);
+  border: 1px solid rgba(255, 170, 200, 0.15);
+  font-size: 0.7rem;
+  color: var(--accent);
+}
+
+.star-card-lore {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.4rem;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.star-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.star-no-connections {
+  text-align: center;
+  padding: 1rem;
+  color: var(--muted);
+  opacity: 0.5;
+  font-size: 0.85rem;
+}
+
+/* ── Galactic Reading ────────────────────────── */
+.galactic-section {
+  margin-top: 0.8rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background: rgba(20, 10, 35, 0.5);
+  border: 1px solid rgba(160, 130, 220, 0.15);
+  backdrop-filter: blur(12px);
+}
+
+.galactic-section-label {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.galactic-section p {
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── Vedic Placement Grid ────────────────────── */
+.vedic-placement-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.vedic-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0.4rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.vedic-pill:hover, .vedic-pill.active {
+  background: rgba(200, 170, 255, 0.12);
+  border-color: rgba(200, 170, 255, 0.3);
+}
+
+.vedic-pill .vp-body { font-size: 0.68rem; color: var(--muted); opacity: 0.7; }
+.vedic-pill .vp-sign { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+.vedic-pill .vp-meta { font-size: 0.65rem; color: var(--muted); opacity: 0.5; }
+
+.vedic-tooltip {
+  margin-top: 0.8rem;
+  padding: 1rem 1.2rem;
+  border-radius: 0.8rem;
+  background: rgba(200, 170, 255, 0.08);
+  border: 1px solid rgba(200, 170, 255, 0.15);
+  animation: fadeIn 0.2s ease;
+}
+
+.vedic-tooltip strong {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.vedic-tooltip p {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── Life Path Hero ───────────────────────────── */
+.life-path-hero {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.lp-number {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-shadow: 0 0 30px var(--glow);
+  line-height: 1;
+}
+
+.lp-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1rem;
+  color: var(--text);
+  margin-top: 0.3rem;
+  letter-spacing: 0.1em;
+}
+
+.lp-reading {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+  padding: 0.8rem 0 0;
+}
+
+/* ── Personality Hero ────────────────────────── */
+.personality-hero {
+  text-align: center;
+  padding: 0.8rem 0;
+}
+
+.pers-type {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.08em;
+}
+
+.pers-reading {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+
+/* ── Natal Lower Grid ────────────────────────── */
+.natal-lower-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* ── Annual Forecast ──────────────────────────── */
+.forecast-headline {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.section-divider {
+  margin: 2rem 0 0.8rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.8rem;
+}
+
+.month-card {
+  padding: 1.1rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+}
+
+.month-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+
+.month-card-head strong {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.month-card-head span {
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.month-card p {
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.forecast-closing {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── HD Input Form ────────────────────────────── */
+.hd-input-form { margin-top: 0.8rem; }
+
+.hd-input-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+
+.hd-input-row select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(200, 170, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.hd-input-row select:focus {
+  border-color: rgba(200, 170, 255, 0.45);
+}
+
+/* ── HD Compact Layout ────────────────────────── */
+.hd-header-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.hd-stat {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 170, 200, 0.08);
+  border: 1px solid rgba(255, 170, 200, 0.1);
+  font-size: 0.78rem;
+}
+
+.hd-stat-label {
+  color: var(--muted);
+  opacity: 0.7;
+  margin-right: 0.3rem;
+}
+
+.hd-stat strong { color: var(--text); }
+
+.hd-reading-body {
+  margin-top: 1rem;
+}
+
+.hd-reading-body p {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.hd-aligned-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.hd-aligned-card {
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 170, 200, 0.05);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+}
+
+.hd-aligned-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  opacity: 0.6;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.hd-aligned-card p, .hd-prompt p {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.hd-prompt {
+  margin-top: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.7rem;
+  background: rgba(200, 170, 255, 0.06);
+  border: 1px solid rgba(200, 170, 255, 0.1);
+}
+
+/* ── HD Main Layout ───────────────────────────── */
+.hd-main-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+
+.hd-centers-side {
+  width: 200px;
+}
+
+.hd-bodygraph {
+  width: 100%;
+  height: auto;
+}
+
+.hd-text-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* ── HD Daily Life ───────────────────────────── */
+.hd-daily-section {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.hd-daily-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.hd-daily-card {
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 170, 200, 0.05);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+}
+
+.hd-daily-card p {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ── HD Columns ───────────────────────────────── */
+.hd-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* ── Matrix ───────────────────────────────────── */
+.matrix-svg {
+  display: block;
+  width: min(100%, 420px);
+  margin: 1rem auto 0;
+}
+
+.matrix-shell {
+  position: relative;
+  width: min(100%, 360px);
+  aspect-ratio: 1;
+  margin: 1.5rem auto 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: radial-gradient(circle, rgba(160, 100, 240, 0.06), rgba(160, 100, 240, 0.01));
+}
+
+.matrix-center, .matrix-node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(255, 170, 200, 0.1);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.matrix-center {
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.6rem; height: 3.6rem;
+  background: rgba(255, 170, 200, 0.15);
+  font-size: 1.2rem;
+}
+
+.matrix-node.top { top: 6%; left: 50%; transform: translateX(-50%); }
+.matrix-node.bottom { bottom: 6%; left: 50%; transform: translateX(-50%); }
+.matrix-node.left { left: 6%; top: 50%; transform: translateY(-50%); }
+.matrix-node.right { right: 6%; top: 50%; transform: translateY(-50%); }
+.matrix-node.tl { left: 16%; top: 16%; }
+.matrix-node.tr { right: 16%; top: 16%; }
+.matrix-node.bl { left: 16%; bottom: 16%; }
+.matrix-node.br { right: 16%; bottom: 16%; }
+
+/* ── Atmosphere Combined ─────────────────────── */
+.atmo-combined {
+  margin-top: 1.2rem;
+}
+
+.atmo-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.atmo-data-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.atmo-body-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.atmo-summary-text {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.atmo-rows {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.atmo-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  transition: background 0.15s;
+}
+
+.atmo-row:hover {
+  background: rgba(255, 170, 200, 0.06);
+}
+
+.atmo-row .metric-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  min-width: 5.5rem;
+}
+
+.atmo-row strong {
+  font-size: 1.05rem;
+  color: var(--text);
+  min-width: 2.5rem;
+}
+
+.atmo-tone {
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.atmo-unit {
+  font-size: 0.7rem;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+/* ── Schumann Resonance ──────────────────────── */
+.schumann-wrap {
+  margin-top: 0.6rem;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 170, 200, 0.12);
+  position: relative;
+  background: #0a0515;
+}
+
+.schumann-spectrogram {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: saturate(0.6) brightness(0.8) contrast(1.2) hue-rotate(260deg);
+  mix-blend-mode: screen;
+}
+
+.schumann-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(160, 100, 240, 0.15) 0%,
+    rgba(255, 140, 200, 0.1) 40%,
+    rgba(100, 160, 255, 0.08) 70%,
+    rgba(140, 220, 200, 0.1) 100%
+  );
+  pointer-events: none;
+  mix-blend-mode: color;
+}
+
+.schumann-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.6rem;
+  opacity: 0.5;
+}
+
+.schumann-footer:hover { opacity: 0.8; }
+
+.schumann-link {
+  font-size: 0.72rem;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.schumann-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ───────────────────────────────── */
+/* ── Numerology ───────────────────────────────── */
+.numerology-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.num-big {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 3.5rem;
+  text-align: center;
+  text-shadow: 0 0 20px var(--glow);
+}
+
+.num-info strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.num-info p {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ── Compact Placement List ───────────────────── */
+.placement-list-compact {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.placement-row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr auto;
+  gap: 0.5rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.82rem;
+  transition: background 0.15s;
+}
+
+.placement-house {
+  color: var(--muted);
+  font-size: 0.75rem;
+  opacity: 0.6;
+  text-align: right;
+}
+
+.placement-row:hover {
+  background: rgba(255, 170, 200, 0.08);
+}
+
+.placement-label { color: var(--muted); }
+.placement-sign { color: var(--text); font-weight: 600; }
+.placement-meta { color: var(--muted); font-size: 0.78rem; }
+
+/* ── Deep Dive Expandable ─────────────────────── */
+.deep-dive-list {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.deep-dive-item {
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+}
+
+.deep-dive-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.deep-dive-toggle:hover {
+  background: rgba(255, 170, 200, 0.06);
+}
+
+.deep-dive-planet {
+  font-weight: 600;
+  min-width: 4.5rem;
+  color: var(--text);
+}
+
+.deep-dive-summary {
+  flex: 1;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.deep-dive-arrow {
+  transition: transform 0.2s;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.deep-dive-item.open .deep-dive-arrow {
+  transform: rotate(180deg);
+}
+
+.deep-dive-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 1rem;
+}
+
+.deep-dive-item.open .deep-dive-body {
+  max-height: none;
+  padding: 0 1rem 1rem;
+}
+
+.deep-dive-body p {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ── Numerology Grid ─────────────────────────── */
+.numerology-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.num-collective {
+  color: var(--gold) !important;
+  text-shadow: 0 0 20px rgba(255, 214, 170, 0.3) !important;
+}
+
+/* ── Cosmic Ask ──────────────────────────────── */
+.cosmic-ask-panel {
+  border: 1px solid rgba(200, 170, 255, 0.2);
+  background: rgba(160, 130, 220, 0.12);
+  text-align: center;
+}
+
+.cosmic-ask-panel .panel-head { justify-content: center; }
+.cosmic-ask-form { text-align: left; }
+
+.cosmic-ask-form {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.cosmic-ask-form input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 170, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.cosmic-ask-form input::placeholder {
+  color: rgba(240, 212, 224, 0.45);
+}
+
+.cosmic-ask-form input:focus {
+  border-color: rgba(200, 170, 255, 0.45);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.cosmic-ask-form button {
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 170, 255, 0.3);
+  background: rgba(160, 130, 220, 0.2);
+  color: var(--text);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.cosmic-ask-form button:hover {
+  background: rgba(160, 130, 220, 0.35);
+  border-color: rgba(200, 170, 255, 0.5);
+}
+
+.cosmic-ask-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cosmic-ask-result {
+  margin-top: 1rem;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 170, 200, 0.06);
+  border: 1px solid rgba(200, 170, 255, 0.12);
+}
+
+.cosmic-ask-loading {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.88rem;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.cosmic-ask-answer {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.cosmic-ask-error {
+  font-size: 0.85rem;
+  color: #ffb0b0;
+}
+
+.cosmic-ask-actions {
+  margin-top: 0.8rem;
+  text-align: right;
+}
+
+/* ── Saved Asks ──────────────────────────────── */
+.saved-asks-panel {
+  border: 1px solid rgba(140, 220, 180, 0.12);
+  background: rgba(140, 220, 180, 0.06);
+  text-align: left;
+}
+
+.saved-ask-item {
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 170, 200, 0.05);
+  border: 1px solid rgba(255, 170, 200, 0.08);
+  margin-top: 0.6rem;
+}
+
+.saved-ask-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.saved-ask-head strong {
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.saved-ask-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.saved-ask-item p {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── Needs Profile Placeholder ────────────────── */
+.needs-profile {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.needs-profile p {
+  max-width: 24rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── Generate Button Bar ─────────────────────── */
+.gen-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.gen-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.gen-btn.gen-small {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.78rem;
+}
+
+.gen-primary {
+  background: rgba(160, 130, 220, 0.2);
+  border-color: rgba(200, 170, 255, 0.3);
+  color: var(--text);
+}
+
+.gen-primary:hover {
+  background: rgba(160, 130, 220, 0.35);
+}
+
+.gen-dive {
+  background: rgba(140, 220, 180, 0.1);
+  border-color: rgba(140, 220, 180, 0.25);
+  color: #a8e8c8;
+}
+
+.gen-dive:hover {
+  background: rgba(140, 220, 180, 0.2);
+}
+
+.gen-delete {
+  background: none;
+  border-color: rgba(255, 170, 170, 0.2);
+  color: rgba(255, 170, 170, 0.6);
+}
+
+.gen-delete:hover {
+  border-color: rgba(255, 170, 170, 0.4);
+  color: rgba(255, 170, 170, 0.9);
+}
+
+.gen-saved-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.gen-controls {
+  min-height: 2rem;
+}
+
+/* ── Deep Dive Actions ───────────────────────── */
+.deep-dive-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Setup Banner ─────────────────────────────── */
+.setup-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.4rem;
+  margin-bottom: 1.2rem;
+  border-radius: var(--card-radius);
+  background: rgba(255, 210, 140, 0.1);
+  border: 1px solid rgba(255, 210, 140, 0.2);
+}
+
+.setup-banner p {
+  font-size: 0.88rem;
+  color: var(--gold);
+}
+
+.setup-banner button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 210, 140, 0.3);
+  background: rgba(255, 210, 140, 0.15);
+  color: var(--gold);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.setup-banner button:hover {
+  background: rgba(255, 210, 140, 0.25);
+}
+
+/* ── Settings Form ───────────────────────────── */
+.settings-form {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.form-row label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.04em;
+}
+
+.form-row input[type="text"],
+.form-row input[type="date"],
+.form-row input[type="time"] {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(200, 170, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+  border-color: rgba(200, 170, 255, 0.45);
+}
+
+.form-row select {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(200, 170, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-row-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.place-input-wrap {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.place-input-wrap input { flex: 1; }
+
+.geocode-btn {
+  padding: 0.65rem 1rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(200, 170, 255, 0.25);
+  background: rgba(160, 130, 220, 0.15);
+  color: var(--text);
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.geocode-btn:hover {
+  background: rgba(160, 130, 220, 0.3);
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.save-btn {
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 170, 255, 0.3);
+  background: rgba(160, 130, 220, 0.2);
+  color: var(--text);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.save-btn:hover {
+  background: rgba(160, 130, 220, 0.35);
+}
+
+.clear-btn {
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 170, 200, 0.15);
+  background: none;
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-btn:hover {
+  border-color: rgba(255, 170, 200, 0.3);
+  color: var(--text);
+}
+
+.profile-status {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.7rem;
+  font-size: 0.85rem;
+}
+
+.profile-status.success {
+  background: rgba(140, 220, 180, 0.1);
+  border: 1px solid rgba(140, 220, 180, 0.2);
+  color: #a8e8c8;
+}
+
+/* ── Background Picker ───────────────────────── */
+.bg-picker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.bg-option {
+  appearance: none;
+  border: 2px solid rgba(255, 170, 200, 0.12);
+  border-radius: 0.8rem;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg-option img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 0.6rem 0.6rem 0 0;
+  display: block;
+}
+
+.bg-option span {
+  padding: 0.4rem 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.bg-option:hover {
+  border-color: rgba(200, 170, 255, 0.4);
+}
+
+.bg-option.active {
+  border-color: rgba(200, 170, 255, 0.6);
+  box-shadow: 0 0 12px rgba(160, 130, 220, 0.2);
+}
+
+.bg-option.active span {
+  color: var(--text);
+}
+
+/* ── Background Variants ─────────────────────── */
+body.bg-constellations {
+  background:
+    linear-gradient(rgba(10, 15, 40, 0.3), rgba(10, 15, 40, 0.25)),
+    url("/bg-constellations.png") center center / cover no-repeat fixed;
+}
+
+body.bg-kawaii {
+  background:
+    linear-gradient(rgba(60, 30, 60, 0.25), rgba(40, 20, 50, 0.2)),
+    url("/bg-kawaii.png") center center / cover no-repeat fixed;
+}
+
+body.bg-glitch {
+  background:
+    linear-gradient(rgba(5, 5, 15, 0.3), rgba(5, 5, 15, 0.2)),
+    url("/bg-glitch.png") center center / cover no-repeat fixed;
+}
+
+@media (max-width: 700px) {
+  .natal-layout { grid-template-columns: 1fr; }
+  .natal-lower-grid { grid-template-columns: 1fr; }
+  .big-three-strip { grid-template-columns: 1fr; }
+  .life-themes-grid { grid-template-columns: 1fr; }
+  .vedic-placement-grid { grid-template-columns: repeat(3, 1fr); }
+  .hd-columns { grid-template-columns: 1fr; }
+  .aspect-cards { grid-template-columns: 1fr; }
+  .month-grid { grid-template-columns: 1fr; }
+  .placement-row { grid-template-columns: 4rem 1fr auto; }
+  .numerology-grid { grid-template-columns: 1fr; }
+  .sky-grid { grid-template-columns: repeat(3, 1fr); }
+  .atmo-layout { grid-template-columns: 1fr; }
+  .cosmic-ask-form { flex-direction: column; }
+  .cosmic-ask-form button { align-self: flex-end; }
+  .form-row-group { grid-template-columns: 1fr; }
+  .hd-input-row { grid-template-columns: 1fr; }
+  .hd-main-layout { grid-template-columns: 1fr; }
+  .hd-centers-side { width: 100%; max-width: 250px; margin: 0 auto; }
+  .hd-daily-grid { grid-template-columns: 1fr; }
+  .setup-banner { flex-direction: column; text-align: center; }
+  .bg-picker { grid-template-columns: repeat(2, 1fr); }
+}

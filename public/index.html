@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ether Forecast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="header-row">
+        <p class="eyebrow">Ether Forecast</p>
+        <button class="profile-btn" data-tab="settings" id="header-profile-btn" title="Settings">
+          <span id="header-profile-initial"></span>
+        </button>
+      </div>
+
+      <!-- Tab Navigation -->
+      <nav class="tabs" aria-label="Sections">
+        <button class="tab active" data-tab="daily">Daily</button>
+        <button class="tab" data-tab="natal">Natal</button>
+        <button class="tab" data-tab="annual-forecast">Annual</button>
+        <button class="tab" data-tab="vedic">Vedic</button>
+        <button class="tab" data-tab="galactic">Galactic</button>
+        <button class="tab" data-tab="human-design">Human Design</button>
+        <button class="tab" data-tab="destiny-matrix">Destiny Matrix</button>
+        <button class="tab" data-tab="personality">Other</button>
+      </nav>
+
+      <!-- Setup Banner (shown when no profile) -->
+      <div id="setup-banner" class="setup-banner" style="display:none">
+        <p>Set up your birth data to get personalized readings.</p>
+        <button onclick="document.querySelector('[data-tab=settings]').click()">Open Settings</button>
+      </div>
+
+      <!-- ═══ DAILY DASHBOARD ═══ -->
+      <section class="tab-pane active" data-pane="daily">
+        <div class="daily-hero">
+          <p id="daily-date" class="daily-date">Loading...</p>
+          <h1 id="daily-headline">Reading the sky...</h1>
+          <div class="moon-badge">
+            <span id="hero-moon-phase" class="moon-phase-text"></span>
+            <span class="moon-sep">&middot;</span>
+            <span>Moon in <strong id="hero-moon-sign"></strong></span>
+            <span class="moon-sep">&middot;</span>
+            <span id="moon-countdown" class="moon-countdown"></span>
+          </div>
+        </div>
+
+        <!-- Numerology -->
+        <div class="numerology-grid" style="margin-bottom:1.5rem">
+          <div id="numerology-card" class="panel">
+            <div class="panel-head"><p class="label">Your Number</p></div>
+            <div id="numerology-content"></div>
+          </div>
+          <div id="collective-numerology-card" class="panel">
+            <div class="panel-head"><p class="label">Collective Number</p></div>
+            <div id="collective-numerology-content"></div>
+          </div>
+        </div>
+
+        <!-- Your Transits Today -->
+        <div class="section-header" style="margin-bottom:0.8rem">
+          <p class="label">Your Transits Today</p>
+          <p class="small">How today's sky is activating your natal chart</p>
+        </div>
+        <div id="daily-aspects" class="aspect-cards"></div>
+
+        <!-- Ask the Sky -->
+        <div id="cosmic-ask-section" class="panel cosmic-ask-panel" style="margin-bottom:1.5rem">
+          <div class="panel-head"><p class="label">Ask the Sky</p></div>
+          <p id="cosmic-ask-greeting" class="small" style="margin-bottom:0.8rem">Ask about timing, transits, or your chart — parsed against current sky + your natal placements.</p>
+          <form id="cosmic-ask-form" class="cosmic-ask-form">
+            <input type="text" id="cosmic-ask-input" placeholder="When is the best time to buy a new car?" autocomplete="off" />
+            <button type="submit" id="cosmic-ask-btn">&#10022; Ask</button>
+          </form>
+          <div id="cosmic-ask-result" class="cosmic-ask-result" style="display:none"></div>
+        </div>
+
+        <!-- Saved Readings -->
+        <div id="saved-asks" class="panel saved-asks-panel" style="margin-bottom:1.5rem; display:none"></div>
+
+        <!-- Current Sky + Sky Watch combined -->
+        <div class="panel" style="margin-bottom:1.2rem; text-align:center">
+          <p class="label">Current Sky</p>
+          <p id="transit-updated" class="small" style="margin-bottom:0.8rem"></p>
+          <div id="transit-list" class="sky-grid"></div>
+          <div id="transit-detail" class="transit-detail" style="display:none"></div>
+          <div id="sky-events-strip" class="sky-events-strip" style="display:none"></div>
+        </div>
+
+        <!-- Space Weather + Body Effect -->
+        <div class="panel atmo-combined">
+          <div class="atmo-layout">
+            <div class="atmo-data-side">
+              <p class="label">Space Weather</p>
+              <div class="atmo-rows">
+                <div class="atmo-row"><span class="metric-label">Kp index</span><strong id="kp-index">--</strong><span id="kp-tone" class="atmo-tone"></span></div>
+                <div class="atmo-row"><span class="metric-label">Solar wind</span><strong id="solar-wind">--</strong><span class="atmo-unit">km/s</span></div>
+                <div class="atmo-row"><span class="metric-label">X-ray</span><strong id="xray-class">--</strong><span id="xray-tone" class="atmo-tone"></span></div>
+                <div class="atmo-row"><span class="metric-label">Proton density</span><strong id="proton-density">--</strong><span class="atmo-unit">p/cm&sup3;</span></div>
+              </div>
+            </div>
+            <div class="atmo-body-side">
+              <p class="label">How You Might Feel</p>
+              <p id="atmo-summary" class="atmo-summary-text"></p>
+            </div>
+          </div>
+          <p id="space-updated" class="small" style="margin-top:0.6rem; opacity:0.4"></p>
+        </div>
+
+        <!-- Schumann Resonance -->
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head">
+            <p class="label">Schumann Resonance</p>
+            <p class="small">Live from Tomsk, Russia · 7.83 Hz fundamental</p>
+          </div>
+          <div class="schumann-wrap">
+            <img id="schumann-img" src="https://sosrff.tsu.ru/new/shm.jpg" alt="Live Schumann Resonance Spectrogram" class="schumann-spectrogram" loading="lazy" />
+          </div>
+          <div class="schumann-footer">
+            <span class="small">Bright bands = resonance spikes · White = high amplitude</span>
+            <a href="https://www.heartmath.org/gci/gcms/live-data/" target="_blank" rel="noopener" class="schumann-link">HeartMath Live Data</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ NATAL CHART ═══ -->
+      <section class="tab-pane" data-pane="natal">
+        <div id="natal-needs-profile" class="needs-profile" style="display:none">
+          <p>Set up your birth data in Settings to see your natal chart.</p>
+        </div>
+        <div id="natal-content">
+          <div class="panel">
+            <div class="panel-head">
+              <p class="label">Natal Chart</p>
+              <p id="natal-birth" class="small"></p>
+            </div>
+            <div class="natal-layout">
+              <div class="wheel-card">
+                <svg id="chart-wheel" viewBox="0 0 420 420" class="chart-wheel" aria-label="Natal chart wheel"></svg>
+              </div>
+              <div class="natal-details">
+                <p class="label">Placements</p>
+                <div id="placement-list" class="placement-list-compact"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Big 3 Snapshot -->
+          <div id="big-three-strip" class="big-three-strip" style="margin-top:1.2rem"></div>
+
+          <!-- Chart Reading -->
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head"><p class="label">Your Chart Reading</p></div>
+            <div id="chart-reading-controls" class="gen-controls"></div>
+            <div id="chart-reading" class="detail-list" style="margin-top:0.8rem"></div>
+          </div>
+
+          <!-- Life Themes -->
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head"><p class="label">Life Themes</p></div>
+            <div id="life-themes" class="life-themes-grid"></div>
+          </div>
+
+          <!-- Deep Dives + Key Aspects side by side -->
+          <div class="natal-lower-grid" style="margin-top:1.2rem">
+            <div class="panel">
+              <div class="panel-head"><p class="label">Placement Deep Dives</p></div>
+              <div id="deep-dives-controls" class="gen-controls" style="margin-bottom:0.6rem"></div>
+              <div id="deep-dives" class="deep-dive-list"></div>
+            </div>
+            <div class="panel">
+              <p class="label">Key Aspects</p>
+              <div id="aspect-list" class="detail-list" style="margin-top:0.8rem"></div>
+            </div>
+          </div>
+
+          <!-- Ask About Your Chart -->
+          <div id="chart-ask-section" class="panel cosmic-ask-panel" style="margin-top:1.2rem">
+            <div class="panel-head"><p class="label">Ask About Your Chart</p></div>
+            <p class="small" style="margin-bottom:0.8rem">Ask anything about your natal placements, patterns, or life themes.</p>
+            <form id="chart-ask-form" class="cosmic-ask-form">
+              <input type="text" id="chart-ask-input" placeholder="What does my chart say about my love life?" autocomplete="off" />
+              <button type="submit" id="chart-ask-btn">&#10022; Ask</button>
+            </form>
+            <div id="chart-ask-result" class="cosmic-ask-result" style="display:none"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ VEDIC ═══ -->
+      <section class="tab-pane" data-pane="vedic">
+        <div id="vedic-needs-profile" class="needs-profile" style="display:none">
+          <p>Set up your birth data in Settings to see your Vedic chart.</p>
+        </div>
+        <div id="vedic-content">
+          <div class="panel">
+            <div class="panel-head">
+              <p class="label">Vedic Chart</p>
+              <p class="small">Sidereal zodiac · same sky, different lens</p>
+            </div>
+            <div id="vedic-big-three" class="big-three-strip" style="margin-top:0.8rem"></div>
+            <p class="label" style="margin-top:1.2rem">All Placements</p>
+            <p class="small" style="margin-bottom:0.6rem">Hover or tap any placement for its meaning</p>
+            <div id="vedic-placements" class="vedic-placement-grid"></div>
+            <div id="vedic-tooltip" class="vedic-tooltip" style="display:none"></div>
+          </div>
+
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head"><p class="label">Vedic Overview</p></div>
+            <div id="vedic-overview-controls" class="gen-controls"></div>
+            <div id="vedic-overview" style="margin-top:0.8rem"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ HUMAN DESIGN ═══ -->
+      <section class="tab-pane" data-pane="human-design">
+        <div id="hd-needs-profile" class="needs-profile" style="display:none">
+          <p>Set up your birth data in Settings to generate your Human Design.</p>
+        </div>
+        <div id="hd-content">
+          <div class="panel">
+            <div class="panel-head">
+              <p class="label">Human Design</p>
+              <p class="small">Enter your type from <a href="https://www.jovianarchive.com/get-your-chart" target="_blank" rel="noopener" style="color:var(--accent)">jovianarchive.com</a> or <a href="https://www.myhumandesign.com/" target="_blank" rel="noopener" style="color:var(--accent)">myhumandesign.com</a></p>
+            </div>
+            <div id="hd-form-section">
+              <form id="hd-form" class="hd-input-form">
+                <div class="hd-input-row">
+                  <div class="form-row">
+                    <label>Type</label>
+                    <select id="hd-type">
+                      <option value="">Select...</option>
+                      <option>Generator</option>
+                      <option>Manifesting Generator</option>
+                      <option>Projector</option>
+                      <option>Manifestor</option>
+                      <option>Reflector</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
+                    <label>Profile</label>
+                    <select id="hd-profile">
+                      <option value="">Select...</option>
+                      <option>1/3</option><option>1/4</option><option>2/4</option><option>2/5</option>
+                      <option>3/5</option><option>3/6</option><option>4/6</option><option>4/1</option>
+                      <option>5/1</option><option>5/2</option><option>6/2</option><option>6/3</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
+                    <label>Authority</label>
+                    <select id="hd-authority">
+                      <option value="">Select...</option>
+                      <option>Sacral</option>
+                      <option>Emotional (Solar Plexus)</option>
+                      <option>Splenic</option>
+                      <option>Ego/Heart</option>
+                      <option>Self-Projected</option>
+                      <option>Mental/Environment</option>
+                      <option>Lunar</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="gen-btn gen-primary" style="margin-top:0.8rem">Generate Reading</button>
+              </form>
+            </div>
+            <div id="hd-reading"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ GALACTIC CENTER ═══ -->
+      <section class="tab-pane" data-pane="galactic">
+        <div id="galactic-needs-profile" class="needs-profile" style="display:none">
+          <p>Set up your birth data in Settings to see your Galactic Center aspects.</p>
+        </div>
+        <div id="galactic-content">
+          <!-- Alien Identity Widget -->
+          <div id="alien-widget" class="alien-widget" style="display:none"></div>
+
+          <!-- Connection Table -->
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head">
+              <p class="label">Galactic Connection Chart</p>
+              <p class="small">Your natal planets aligned with star systems</p>
+            </div>
+            <div id="galactic-table-wrap" class="galactic-table-wrap"></div>
+          </div>
+
+          <!-- Top Lineages (star cards) -->
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head"><p class="label">Your Star Lineages</p></div>
+            <div id="top-lineages" class="star-connections"></div>
+          </div>
+
+          <!-- Lineage Reading -->
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head"><p class="label">Lineage Reading</p></div>
+            <div id="galactic-interp-controls" class="gen-controls"></div>
+            <div id="galactic-reading" style="margin-top:0.8rem"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ ANNUAL FORECAST ═══ -->
+      <section class="tab-pane" data-pane="annual-forecast">
+        <div id="forecast-needs-profile" class="needs-profile" style="display:none">
+          <p>Set up your birth data in Settings to generate your annual forecast.</p>
+        </div>
+        <div id="forecast-content">
+          <div class="panel">
+            <div class="panel-head">
+              <p class="label" id="forecast-year-label">Annual Forecast</p>
+              <p id="forecast-based-on" class="small"></p>
+            </div>
+            <div id="forecast-controls" class="gen-controls"></div>
+            <div id="forecast-generated" style="display:none">
+              <h2 id="forecast-headline" class="forecast-headline"></h2>
+              <div id="forecast-themes" class="detail-list"></div>
+              <div class="section-divider"><p class="label">Life Areas</p></div>
+              <div id="forecast-sections" class="detail-list"></div>
+              <div class="section-divider"><p class="label">Month by Month</p></div>
+              <div id="forecast-months" class="month-grid"></div>
+              <div class="forecast-closing">
+                <div class="detail-list">
+                  <div class="detail-item"><strong>Year Windows</strong><span id="forecast-windows"></span></div>
+                  <div class="detail-item"><strong>Guidance</strong><span id="forecast-guidance"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ DESTINY MATRIX ═══ -->
+      <section class="tab-pane" data-pane="destiny-matrix">
+        <div id="matrix-needs-profile" class="needs-profile" style="display:none">
+          <p>Set up your birth data in Settings to calculate your Destiny Matrix.</p>
+        </div>
+        <div id="matrix-content">
+          <div class="panel">
+            <div class="panel-head">
+              <p class="label">Destiny Matrix</p>
+              <p id="matrix-birth-label" class="small">22 Arcana</p>
+            </div>
+            <svg id="matrix-svg" viewBox="0 0 400 440" class="matrix-svg" aria-label="Destiny Matrix Chart"></svg>
+          </div>
+
+          <div class="panel" style="margin-top:1.2rem">
+            <p class="label">Your Matrix Decoded</p>
+            <div id="matrix-reading-controls" class="gen-controls" style="margin-bottom:0.8rem"></div>
+            <div id="matrix-reading" class="deep-dive-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ OTHER ═══ -->
+      <section class="tab-pane" data-pane="personality">
+        <div id="personality-needs-profile" class="needs-profile" style="display:none">
+          <p>Set up your birth data in Settings to see personality insights.</p>
+        </div>
+        <div id="personality-content">
+          <!-- Life Path -->
+          <div class="panel">
+            <div class="panel-head">
+              <p class="label">Life Path Number</p>
+            </div>
+            <div class="life-path-hero">
+              <div class="lp-number" id="life-path-value">--</div>
+              <div class="lp-title" id="life-path-title"></div>
+            </div>
+            <div id="life-path-reading" class="lp-reading"></div>
+          </div>
+
+          <!-- MBTI -->
+          <div id="mbti-panel" class="panel" style="margin-top:1.2rem; display:none">
+            <div class="panel-head"><p class="label">MBTI</p></div>
+            <div class="personality-hero">
+              <div class="pers-type" id="mbti-display"></div>
+            </div>
+            <div id="mbti-controls" class="gen-controls" style="margin-top:0.6rem"></div>
+            <div id="mbti-reading"></div>
+          </div>
+
+          <!-- Enneagram -->
+          <div id="enneagram-panel" class="panel" style="margin-top:1.2rem; display:none">
+            <div class="panel-head"><p class="label">Enneagram</p></div>
+            <div class="personality-hero">
+              <div class="pers-type" id="enneagram-display"></div>
+            </div>
+            <div id="enneagram-controls" class="gen-controls" style="margin-top:0.6rem"></div>
+            <div id="enneagram-reading"></div>
+          </div>
+
+          <!-- No types message -->
+          <div id="no-types-msg" class="panel" style="margin-top:1.2rem">
+            <p class="small" style="text-align:center; padding:1rem; opacity:0.5">Add your MBTI and Enneagram types in Settings to see personality analyses here.</p>
+          </div>
+
+          <!-- Unified Personality Analysis -->
+          <div class="panel cosmic-ask-panel" style="margin-top:1.2rem">
+            <div class="panel-head"><p class="label">Personality Synthesis</p></div>
+            <p class="small" style="margin-bottom:0.6rem">How your MBTI, Enneagram, and Life Path weave together.</p>
+            <div id="synthesis-controls" class="gen-controls"></div>
+            <div id="synthesis-reading"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ SETTINGS ═══ -->
+      <section class="tab-pane" data-pane="settings">
+        <div class="panel">
+          <div class="panel-head">
+            <p class="label">Birth Data</p>
+            <p class="small">Used for all chart calculations</p>
+          </div>
+          <form id="profile-form" class="settings-form">
+            <div class="form-row">
+              <label for="profile-name">Name</label>
+              <input type="text" id="profile-name" placeholder="Your name (optional)" />
+            </div>
+            <div class="form-row-group">
+              <div class="form-row">
+                <label for="profile-date">Birth Date</label>
+                <input type="date" id="profile-date" required />
+              </div>
+              <div class="form-row">
+                <label for="profile-time">Birth Time</label>
+                <input type="time" id="profile-time" value="12:00" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="profile-place">Birth Place</label>
+              <div class="place-input-wrap">
+                <input type="text" id="profile-place" placeholder="City, State, Country" required />
+                <button type="button" id="geocode-btn" class="geocode-btn">Look up</button>
+              </div>
+              <p id="geocode-result" class="small" style="margin-top:0.4rem"></p>
+              <input type="hidden" id="profile-lat" />
+              <input type="hidden" id="profile-lng" />
+            </div>
+            <div class="form-row-group">
+              <div class="form-row">
+                <label for="profile-mbti">MBTI Type</label>
+                <select id="profile-mbti">
+                  <option value="">Select...</option>
+                  <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+                  <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+                  <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+                  <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label for="profile-enneagram">Enneagram</label>
+                <select id="profile-enneagram">
+                  <option value="">Select...</option>
+                  <option>1 - The Reformer</option><option>2 - The Helper</option><option>3 - The Achiever</option>
+                  <option>4 - The Individualist</option><option>5 - The Investigator</option><option>6 - The Loyalist</option>
+                  <option>7 - The Enthusiast</option><option>8 - The Challenger</option><option>9 - The Peacemaker</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="save-btn">Save Profile</button>
+              <button type="button" id="clear-profile-btn" class="clear-btn">Clear</button>
+            </div>
+          </form>
+          <div id="profile-status" class="profile-status" style="display:none"></div>
+        </div>
+
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head">
+            <p class="label">Background</p>
+            <p class="small">Choose your sky</p>
+          </div>
+          <div id="bg-picker" class="bg-picker">
+            <button class="bg-option" data-bg="default" title="Original">
+              <img src="/background.png" alt="Original" />
+              <span>Original</span>
+            </button>
+            <button class="bg-option" data-bg="constellations" title="Constellations">
+              <img src="/bg-constellations.png" alt="Constellations" />
+              <span>Deep Sky</span>
+            </button>
+            <button class="bg-option" data-bg="kawaii" title="Kawaii">
+              <img src="/bg-kawaii.png" alt="Kawaii" />
+              <span>Kawaii</span>
+            </button>
+            <button class="bg-option" data-bg="glitch" title="Glitch">
+              <img src="/bg-glitch.png" alt="Glitch" />
+              <span>Glitch</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head"><p class="label">Current Profile</p></div>
+          <div id="current-profile-display" class="detail-list">
+            <p class="small">No profile saved yet.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
